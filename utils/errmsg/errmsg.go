@@ -36,7 +36,8 @@ const (
 	ERROR_CATE_NOT_EXIST = 2002
 
 	// code= 3000... 分类模块的错误
-
+	ERROR_ART_NOT_EXIST = 3001
+	ERROR_CATE_NOT_ART = 3002
 )
 
 var codeMsg = map[int]string{
@@ -55,6 +56,10 @@ var codeMsg = map[int]string{
 	ERROR_CATENAME_USED: "分类名称已存在",
 
 	ERROR_CATE_NOT_EXIST: "该分类不存在",
+
+	// 文章
+	ERROR_ART_NOT_EXIST: "该文章不存在",
+	ERROR_CATE_NOT_ART: "该分类下无文章",
 }
 
 func GetErrMsg(code int) string {

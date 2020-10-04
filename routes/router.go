@@ -34,6 +34,10 @@ func InitRouter() {
                 auth.PUT("category/:id",v1.EditCate)
                 auth.DELETE("category/:id",v1.DeleteCate)
 		// 文章模块的路由接口
+		//auth.POST("article/add",v1.AddArticle)
+		//auth.get("article",v1.GetArt)
+		auth.PUT("article/:id",v1.EditArt)
+		auth.DELETE("article/:id",v1.DeleteArt)
 	}
 	router := r.Group("api/v1")
 	{
@@ -41,6 +45,10 @@ func InitRouter() {
 		router.GET("category",v1.GetCates)
 		router.POST("login",v1.Login)
 		router.GET("users",v1.GetUsers)
+		router.GET("article",v1.GetArt)
+		router.GET("article/list",v1.GetCateArt)
+		router.GET("article/info/:id",v1.GetCateArt)
+		router.POST("article/add",v1.AddArticle)
 	}
 
 	r.Run(utils.HttpPort)

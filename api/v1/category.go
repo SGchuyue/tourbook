@@ -69,16 +69,19 @@ func EditCate(c *gin.Context) {
         }
         if code == errmsg.ERROR_CATENAME_USED{
                 c.Abort()
-        }
-
+	}
+//	data := model.GetCates(pageSize,pageNum)
+//        code = errmsg.SUCCSE
         c.JSON(http.StatusOK,gin.H{
-                "status": code,
-                "message": errmsg.GetErrMsg(code),
+                "status":code,
+//                "data":data,
+                "message":errmsg.GetErrMsg(code),
         })
 }
 
+/*
 // 删除分类
-func DeleteCate(c *gin.Context) {
+func DeleteCate(c *gin.Context){
         id,_ := strconv.Atoi(c.Param("id"))
 
         code = model.DeleteCate(id)
@@ -88,5 +91,13 @@ func DeleteCate(c *gin.Context) {
                 "message": errmsg.GetErrMsg(code),
         })
 
+}*/
+// 删除分类
+func DeleteCate(c *gin.Context) {
+	id,_ := strconv.Atoi(c.Param("id"))
+	code = model.DeleteCate(id)
+	c.JSON(http.StatusOK,gin.H{
+		"status": code,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
-
