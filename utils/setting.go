@@ -6,23 +6,23 @@ import (
 )
 
 var (
-	AppMode string
+	AppMode  string //
 	HttpPort string
-	JwtKey string // token
+	JwtKey   string // token
 
-	Db string
-	DbHost string
-	DbPort string
-	DbUser string
-	DbPassWord string
-	DbName string
+	Db         string // 数据库
+	DbHost     string //
+	DbPort     string
+	DbUser     string // 用户名
+	DbPassWord string // 密码
+	DbName     string // 数据库名称
 )
 
 func init() {
 	// 使用ini包读取配置文件
-	file,err := ini.Load("config/config.ini")
+	file, err := ini.Load("config/config.ini")
 	if err != nil {
-		fmt.Println("配置文件读取错误，检查路径：",err)
+		fmt.Println("配置文件读取错误，检查路径：", err)
 	}
 
 	LoadServer(file)
