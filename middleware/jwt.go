@@ -9,6 +9,7 @@ import (
 	"time"
 	"tourbook/utils"
 	"tourbook/utils/errmsg"
+	// "fmt"
 )
 
 var JwtKey = []byte(utils.JwtKey)
@@ -46,6 +47,7 @@ func CheckToken(token string) (*MyClaims, int) {
 		return JwtKey, nil
 	})
 	key, _ := setToken.Claims.(*MyClaims)
+	// fmt.Println("yy",setToken)
 	if setToken.Valid {
 		return key, errmsg.SUCCSE
 	} else {
@@ -67,7 +69,9 @@ func JwtToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		checkToken := strings.SplitN(tokenHeader, "", 2)
+		// fmt.Println("yz",tokenHeader)
+		checkToken := strings.SplitN(tokenHeader, "", 1)
+		// fmt.Println("checkToken",checkToken)
 		if len(checkToken) != 2 && checkToken[0] != "Bearer" {
 			code = errmsg.ERROR_TOKEN_TYPE_WRONG
 			c.JSON(http.StatusOK, gin.H{
@@ -75,8 +79,10 @@ func JwtToken() gin.HandlerFunc {
 				"message": errmsg.GetErrMsg(code),
 			})
 			c.Abort()
+			return
 		}
 		key, tcode := CheckToken(checkToken[1])
+		// fmt.Println(key, tcode)
 		if tcode == errmsg.ERROR {
 			code = errmsg.ERROR_TOKEN_WRONG
 			c.JSON(http.StatusOK, gin.H{
@@ -84,6 +90,7 @@ func JwtToken() gin.HandlerFunc {
 				"message": errmsg.GetErrMsg(code),
 			})
 			c.Abort()
+			return
 		}
 		if time.Now().Unix() > key.ExpiresAt {
 			code = errmsg.ERROR_TOKEN_RUNTIME
@@ -92,6 +99,7 @@ func JwtToken() gin.HandlerFunc {
 				"message": errmsg.GetErrMsg(code),
 			})
 			c.Abort()
+			return
 		}
 		c.Set("username", key.Username)
 		c.Next()

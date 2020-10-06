@@ -11,7 +11,8 @@ import (
 var db *gorm.DB // 数据库调用
 
 func InitDb() {
-	db, err := gorm.Open(utils.Db, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Local",
+	var err error
+	db, err = gorm.Open(utils.Db, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true&loc=Local",
 		utils.DbUser,
 		utils.DbPassWord,
 		utils.DbHost,
