@@ -8,6 +8,7 @@ import (
 	"tourbook/utils/errmsg"
 )
 
+// 登陆验证
 func Login(c *gin.Context) {
 	var data model.User
 	c.ShouldBindJSON(&data)

@@ -6,13 +6,13 @@ import (
 )
 
 var (
-	AppMode  string //
-	HttpPort string
-	JwtKey   string // token
+	AppMode  string // 应用模式
+	HttpPort string // 网络端口
+	JwtKey   string // token验证
 
 	Db         string // 数据库
-	DbHost     string //
-	DbPort     string
+	DbHost     string // 数据库主机
+	DbPort     string // 数据库端口
 	DbUser     string // 用户名
 	DbPassWord string // 密码
 	DbName     string // 数据库名称
@@ -29,12 +29,14 @@ func init() {
 	LoadData(file)
 }
 
+// 服务端实例化配置
 func LoadServer(file *ini.File) {
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	HttpPort = file.Section("server").Key("HttpPort").MustString(":3000")
 	JwtKey = file.Section("server").Key("jwtkey").MustString("jwtkey")
 }
 
+// 数据库端实例化配置
 func LoadData(file *ini.File) {
 	Db = file.Section("database").Key("Db").MustString("debug")
 	DbHost = file.Section("database").Key("DbHost").MustString("localhost")

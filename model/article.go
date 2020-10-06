@@ -1,21 +1,22 @@
 package model
 
-import "github.com/jinzhu/gorm"
-import "tourbook/utils/errmsg"
+import (
+	"github.com/jinzhu/gorm"
+	"tourbook/utils/errmsg"
+)
 
 type Article struct {
 	gorm.Model
-	Title    string   `gorm:"type:varchar(100);not null" json:"title"`
-	Category Category `gorm:"foreignkey:Cid"` // 物理外建
-	Cid      int      `gorm: "type:int;not null" json:"cid"`
-	Desc     string   `gorm:"type:varchar(200)" json:"desc"`
-	Content  string   `gorm:"type:longtext" json:"content"`
-	Img      string   `gorm:"type:varchar(100)" json:"img"`
+	Title    string   `gorm:"type:varchar(100);not null" json:"title"` // 文章标题
+	Category Category `gorm:"foreignkey:Cid"`                          // 物理外建
+	Cid      int      `gorm: "type:int;not null" json:"cid"`           // 文章id
+	Desc     string   `gorm:"type:varchar(200)" json:"desc"`           // 文章说明
+	Content  string   `gorm:"type:longtext" json:"content"`            // 文章内容
+	Img      string   `gorm:"type:varchar(100)" json:"img"`            // 上传图像
 }
 
 // 添加文章
 func CreateArt(data *Article) int {
-
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR // 500
@@ -33,7 +34,7 @@ func GetArt(pageSize int, pageNum int) ([]Article, int) {
 	return articleList, errmsg.SUCCSE
 }
 
-// todo 查询文章
+// 查询单个文章
 func GetArtInfo(id int) (Article, int) {
 	var art Article
 	err := db.Preload("Category").Where("id = ?", id).First(&art).Error
@@ -43,7 +44,7 @@ func GetArtInfo(id int) (Article, int) {
 	return art, errmsg.SUCCSE
 }
 
-// TO 查询分类下的所有文章
+// 查询分类下的所有文章
 func GetCateArt(id int, pageSize int, pageNum int) ([]Article, int) {
 	var cateArtList []Article
 	err := db.Preload("Category").Limit(pageSize).Offset((pageNum-1)*pageSize).Where("cid = ?", id).Find(&cateArtList).Error
@@ -62,11 +63,7 @@ func EditArt(id int, data *Article) int {
 	maps["content"] = data.Content
 	maps["img"] = data.Img
 	maps["desc"] = data.Desc
-
 	err := db.Model(&art).Where("id = ?", id).Updates(maps).Error
-	//	titleerr = db.Model(&art).Where("title = ?",title).Updates(maps).Error
-	//	descerr = db.Model(&art).Where("desc = ?",desc).Updates(maps).Error
-	//	contenterr = db.Model(&art).Where("content = ?",content).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}

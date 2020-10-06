@@ -2,8 +2,8 @@
 package errmsg
 
 const (
-	SUCCSE = 200
-	ERROR  = 500
+	SUCCSE = 200 // 响应成功
+	ERROR  = 500 // 响应错误
 
 	// code= 1000... 用户模块的错误
 	ERROR_USERNAME_USED    = 1001 // 用户名重复
@@ -16,11 +16,11 @@ const (
 	ERROR_USER_NO_RIGHT    = 1008 // 用户无权限
 	// code= 2000... 分类模块错误
 	ERROR_CATENAME_USED  = 2001 // 分类已存在
-	ERROR_CATE_NOT_EXIST = 2002
+	ERROR_CATE_NOT_EXIST = 2002 // 分类不存在
 
 	// code= 3000... 文章模块的错误
-	ERROR_ART_NOT_EXIST = 3001
-	ERROR_CATE_NOT_ART  = 3002
+	ERROR_ART_NOT_EXIST = 3001 // 文章不存在
+	ERROR_CATE_NOT_ART  = 3002 // 分类下无文章
 )
 
 var codeMsg = map[int]string{
@@ -36,8 +36,7 @@ var codeMsg = map[int]string{
 	ERROR_USER_NO_RIGHT:    "用户无权限",
 
 	// 分类
-	ERROR_CATENAME_USED: "分类名称已存在",
-
+	ERROR_CATENAME_USED:  "分类名称已存在",
 	ERROR_CATE_NOT_EXIST: "该分类不存在",
 
 	// 文章
@@ -45,6 +44,7 @@ var codeMsg = map[int]string{
 	ERROR_CATE_NOT_ART:  "该分类下无文章",
 }
 
+// 返回错误信息
 func GetErrMsg(code int) string {
 	return codeMsg[code]
 }

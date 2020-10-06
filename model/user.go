@@ -10,9 +10,9 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(20);not null "json:"username"`
-	Password string `gorm:"type:varchar(20);not null "json:"password"`
-	Role     int    `grom:"type:int" json:"role"`
+	Username string `gorm:"type:varchar(20);not null "json:"username"` // 用户名
+	Password string `gorm:"type:varchar(20);not null "json:"password"` // 密码
+	Role     int    `grom:"type:int" json:"role"`                      // 权限
 }
 
 // 查询用户是否存在
@@ -40,7 +40,7 @@ func CreateUser(data *User) int {
 // 查询用户列表
 func GetUsers(pageSize int, pageNum int) []User {
 	var users []User
-	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil
 	}

@@ -1,23 +1,20 @@
-// 用户接口
 package v1
 
 import (
-	"github.com/gin-gonic/gin" // 引用上下文
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"tourbook/model"
 	"tourbook/utils/errmsg"
 )
 
-// 查询用户是否存在
-
-var code int
+var code int // 定义错误码
 
 // 添加用户
 func AddUser(c *gin.Context) {
-	// todo 添加用户
 	var data model.User
-	_ = c.ShouldBindJSON(&data) //
+	_ = c.ShouldBindJSON(&data)
+	// 检测用户名是否存在
 	code = model.CheckUser(data.Username)
 	if code == errmsg.SUCCSE {
 		model.CreateUser(&data)
@@ -32,8 +29,6 @@ func AddUser(c *gin.Context) {
 		"message": errmsg.GetErrMsg(code),
 	})
 }
-
-// 查询单个用户
 
 // 查询用户列表
 func GetUsers(c *gin.Context) {
@@ -57,7 +52,7 @@ func GetUsers(c *gin.Context) {
 	})
 }
 
-// 编辑用户
+// 编辑用户信息
 func EditUser(c *gin.Context) {
 	var data model.User
 	id, _ := strconv.Atoi(c.Param("id"))

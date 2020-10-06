@@ -6,13 +6,6 @@ import (
 	"tourbook/utils/errmsg"
 )
 
-/*
-type Category struct {
-	gorm.Model
-	Name string `gorm:"type:varchar(20);not null" json:"name"`
-
-}
-*/
 type Category struct {
 	ID   uint   `gorm:"primary_key;auto_increment" json:"id"`  // 分类id
 	Name string `gorm:"type:varchar(20);not null" json:"name"` // 分类名
@@ -53,7 +46,6 @@ func EditCate(id int, data *Category) int {
 	var cate Category
 	var maps = make(map[string]interface{})
 	maps["name"] = data.Name
-
 	err := db.Model(&cate).Where("id = ?", id).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
