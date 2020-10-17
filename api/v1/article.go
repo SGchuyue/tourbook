@@ -13,7 +13,6 @@ func AddArticle(c *gin.Context) {
 	var data model.Article
 	_ = c.ShouldBindJSON(&data)
 	code = model.CreateArt(&data)
-
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"data":    data,
@@ -84,9 +83,7 @@ func EditArt(c *gin.Context) {
 // 删除文章
 func DeleteArt(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	code = model.DeleteArt(id)
-
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"message": errmsg.GetErrMsg(code),

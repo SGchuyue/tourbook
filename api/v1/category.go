@@ -20,7 +20,6 @@ func AddCategory(c *gin.Context) {
 	if code == errmsg.ERROR_CATENAME_USED {
 		code = errmsg.ERROR_CATENAME_USED
 	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"data":    data,
@@ -51,7 +50,7 @@ func GetCates(c *gin.Context) {
 func EditCate(c *gin.Context) {
 	var data model.Category
 	id, _ := strconv.Atoi(c.Param("id"))
-	c.ShouldBindJSON(&data)
+	_ = c.ShouldBindJSON(&data)
 	code = model.CheckCategory(data.Name)
 	if code == errmsg.SUCCSE {
 		model.EditCate(id, &data)

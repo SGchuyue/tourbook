@@ -32,7 +32,6 @@ func SetToken(username string) (string, int) {
 			Issuer:    "tourbook",
 		},
 	}
-
 	reqClaim := jwt.NewWithClaims(jwt.SigningMethodHS256, SetClaims) // hs256 非 ES256
 	token, err := reqClaim.SignedString(JwtKey)
 	if err != nil {

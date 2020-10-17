@@ -17,7 +17,7 @@ func Logger() gin.HandlerFunc {
 		startTime := time.Now() // 开始时间
 		c.Next()
 		stopTime := time.Since(startTime)                                                           // 结束时间
-		spendTime := fmt.Sprintf("%d ms", int(math.Ceil(float64(stopTime.Nanoseconds())/100000.0))) // 执行时常
+		spendTime := fmt.Sprintf("%d ms", int(math.Ceil(float64(stopTime.Nanoseconds())/100000.0)))  // 执行时常
 		hostName, err := os.Hostname()                                                              // 登陆主机名
 		if err != nil {
 			hostName = "unknown"

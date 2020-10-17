@@ -36,6 +36,5 @@ func InitRouter() {
 		router.GET("article/info/:id", v1.GetCateArt)
 		router.POST("article/add", v1.AddArticle)
 	}
-
 	r.Run(utils.HttpPort)
 }
