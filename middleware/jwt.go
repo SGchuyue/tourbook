@@ -53,7 +53,6 @@ func CheckToken(token string) (*MyClaims, int) {
 	} else {
 		return nil, errmsg.ERROR
 	}
-
 }
 
 // jwt中间件
@@ -103,6 +102,5 @@ func JwtToken() gin.HandlerFunc {
 		}
 		c.Set("username", key.Username)
 		c.Next()
-
 	}
 }

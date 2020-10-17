@@ -29,7 +29,6 @@ func CheckUser(name string) (code int) {
 func CreateUser(data *User) int {
 	// 加密
 	data.Password = ScryptPw(data.Password)
-
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR // 500
@@ -93,9 +92,7 @@ func ScryptPw(password string) string {
 // 登陆验证
 func CheckLogin(username string, password string) int {
 	var user User
-
 	db.Where("username = ?", username).First(&user)
-
 	if user.ID == 0 {
 		return errmsg.ERROR_USER_NOT_EXIST
 	}

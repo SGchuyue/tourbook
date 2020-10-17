@@ -23,7 +23,6 @@ func CheckCategory(name string) (code int) {
 
 // 新增分类
 func CreateCate(data *Category) int {
-
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR // 500

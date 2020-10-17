@@ -19,7 +19,6 @@ func InitDb() {
 		utils.DbPort,
 		utils.DbName,
 	))
-
 	if err != nil {
 		fmt.Printf("连接数据库发生错误，检查参数：", err)
 	}

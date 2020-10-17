@@ -9,7 +9,6 @@ var (
 	AppMode  string // 应用模式
 	HttpPort string // 网络端口
 	JwtKey   string // token验证
-
 	Db         string // 数据库
 	DbHost     string // 数据库主机
 	DbPort     string // 数据库端口
@@ -24,7 +23,6 @@ func init() {
 	if err != nil {
 		fmt.Println("配置文件读取错误，检查路径：", err)
 	}
-
 	LoadServer(file)
 	LoadData(file)
 }
@@ -44,6 +42,4 @@ func LoadData(file *ini.File) {
 	DbUser = file.Section("database").Key("DbUser").MustString("hua")
 	DbPassWord = file.Section("database").Key("DbPassWord").MustString("root")
 	DbName = file.Section("database").Key("DbName").MustString("123")
-	// AppMode = file.Section("database").Key("AppMode").MustString("debug")
-
 }
