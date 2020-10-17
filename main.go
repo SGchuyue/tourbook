@@ -1,12 +1,11 @@
 package main
 
 import (
-	"tourbook/routes"
 	"tourbook/model"
+	"tourbook/routes"
 )
 
 func main() {
-
 	// 引用数据库
 	model.InitDb()
 	// 调用路由

@@ -2,6 +2,7 @@
 package middleware
 
 import (
+	"github.com/SGchuyue/logger/logger"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -9,7 +10,6 @@ import (
 	"time"
 	"tourbook/utils"
 	"tourbook/utils/errmsg"
-	// "fmt"
 )
 
 var JwtKey = []byte(utils.JwtKey)
@@ -26,7 +26,7 @@ func SetToken(username string) (string, int) {
 	ExpireTime := time.Now().Add(10 * time.Hour)
 	SetClaims := MyClaims{
 		username,
-		//		password,
+		// password,
 		jwt.StandardClaims{
 			ExpiresAt: ExpireTime.Unix(),
 			Issuer:    "tourbook",
@@ -53,6 +53,7 @@ func CheckToken(token string) (*MyClaims, int) {
 	} else {
 		return nil, errmsg.ERROR
 	}
+
 }
 
 // jwt中间件
@@ -69,10 +70,8 @@ func JwtToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		// fmt.Println("yz",tokenHeader)
 		checkToken := strings.SplitN(tokenHeader, "", 1)
-		// fmt.Println("checkToken",checkToken)
-		if len(checkToken) != 2 && checkToken[0] != "Bearer" {
+		if len(checkToken) != 1 && checkToken[0] != "Bearer" {
 			code = errmsg.ERROR_TOKEN_TYPE_WRONG
 			c.JSON(http.StatusOK, gin.H{
 				"code":    code,
@@ -82,7 +81,6 @@ func JwtToken() gin.HandlerFunc {
 			return
 		}
 		key, tcode := CheckToken(checkToken[1])
-		// fmt.Println(key, tcode)
 		if tcode == errmsg.ERROR {
 			code = errmsg.ERROR_TOKEN_WRONG
 			c.JSON(http.StatusOK, gin.H{
@@ -92,6 +90,8 @@ func JwtToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		logger.InitLogger("TEST.log", 3, 4, 5, true)
+		logger.Debug(checkToken, key)
 		if time.Now().Unix() > key.ExpiresAt {
 			code = errmsg.ERROR_TOKEN_RUNTIME
 			c.JSON(http.StatusOK, gin.H{
